@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+	string nome = HttpContextAccessor.HttpContext.Session.GetString("nome");
+}
+
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	
+	<style>
+		body {
+			background: url("https://img.freepik.com/fotos-gratis/natureza-morta-de-chaves-para-uma-nova-casa_23-2151015271.jpg?t=st=1733182502~exp=1733186102~hmac=4eae5dfa17c50595dd1a4a6d5898f2e19a9b82402409996be3cf04d4564716de&w=740");
+			background-size: cover;
+			background-position: center;
+			min-height: 100vh;
+			align-items: center;
+			justify-content: center;
+		}
+	</style>
+
+</head>
+<body>
+<br />
+Seja bem vindo <b>@nome</b>!!!
+<input type="button" onclick="fazer_logout()" value="Sair"/>
+<br /><br />
+
+<h2>Área Administrativa</h2>
+<br>
+
+<a href="/Imobiliaria/PageGerenciarFuncionario">
+    <input type="button" value="Gerenciar Funcionários" style="width:200px" onclick=""/>
+</a><br /><br />
+
+<a href="/Imobiliaria/PageGerenciarImoveis">
+    <input type="button" value="Gerenciar Imóveis" style="width:200px" onclick=""/>
+</a>
+
+<script>
+	function fazer_logout(){
+		var jsonEnvio = {};
+		$.ajax({
+			url:"/Funcionario/Logout",
+			data: jsonEnvio,
+			type: "post",
+			success: function (resp){
+				if (resp=="ok"){
+					document.location.href="/Imobiliaria/PageLogin";
+				}else{
+					alert("Ocorreu um erro ao realizar o logout!")
+				}
+				
+			}
+		})
+	}
+
+</script>
+
+</body>
+</html>
